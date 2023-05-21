@@ -1,22 +1,19 @@
-package org.example;
+package src.main.java.org.example;
 
-abstract class Person {
+import java.util.ArrayList;
+
+public abstract class  Person {
     private String name;
     private String phoneNumber;
     private String emailAddress;
-    private String uniqueID;
-    private String[] order;
+    private String id;
+    private ArrayList <Order> arrayList;
 
-    public void requestOrder(){
+    public abstract void requestOrder();
 
-    }
-    public void viewOrderDetails(){
+    public abstract void viewOrder();
+    public abstract void modifyOrder();
+    public abstract void removeOrder();
 
-    }
-    public void modifyOrder(){
 
-    }
-    public void removeOrder(){
-
-    }
 }

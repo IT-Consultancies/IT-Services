@@ -1,23 +1,15 @@
-package org.example;
+package src.main.java.org.example;
 
-abstract class Service {
+public abstract class  Service {
     private String serviceName;
     private String subServiceName;
     private String price;
 
-    public void requestConfiguration(){
+    public abstract void requestConfiguration();
+    public abstract void requestDesign();
 
-    }
-    public void requestDesign(){
+    public abstract void requestImplementation();
+    public abstract void requestTroubleshooting();
 
-    }
-    public void requestImplementation(){
-
-    }
-    public void requestTroubleshootiong(){
-
-    }
-    public void requestConsulting(){
-
-    }
+    public abstract void requestConsulting();
 }

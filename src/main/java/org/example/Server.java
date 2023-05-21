@@ -1,6 +1,6 @@
 package src.main.java.org.example;
 
-public class Network extends Service{
+public class Server extends Service{
     @Override
     public void requestConfiguration() {
 
