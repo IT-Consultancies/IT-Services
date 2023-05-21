@@ -12,10 +12,13 @@ public class DatabaseManager {
 
             String query = "SELECT * FROM users WHERE name = ? AND pass = ?";
             PreparedStatement statement = conn.prepareStatement(query);
+
             statement.setString(1, name);
             statement.setInt(2, pass);
 
+
             ResultSet resultSet = statement.executeQuery();
+
             String uname = null;
             String uphone = null;
             int uid = -1;
@@ -25,6 +28,7 @@ public class DatabaseManager {
                  uphone = resultSet.getString("phone");
                  uid = resultSet.getInt("id");
             }
+
             if(uname == null || uphone == null  || uid == -1){
                 System.out.println("User not found !");
                 return null;
