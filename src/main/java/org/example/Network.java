@@ -1,6 +1,12 @@
 package org.example;
 
 public class Network extends Service{
+
+
+    public Network(String serviceName, String subServiceName, String price) {
+        super(serviceName, subServiceName, price);
+    }
+
     @Override
     public void requestConfiguration() {
 

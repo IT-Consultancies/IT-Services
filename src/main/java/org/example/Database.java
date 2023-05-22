@@ -2,6 +2,10 @@ package org.example;
 
 
 public class Database extends Service{
+    public Database(String serviceName, String subServiceName, String price) {
+        super(serviceName, subServiceName, price);
+    }
+
     @Override
     public void requestConfiguration() {
 

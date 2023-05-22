@@ -1,6 +1,10 @@
 package org.example;
 
 public class Cloud extends Service{
+    public Cloud(String serviceName, String subServiceName, String price) {
+        super(serviceName, subServiceName, price);
+    }
+
     @Override
     public void requestConfiguration() {
 

@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         //Database stuff (fill data)
         Person c1 = new Customer("Mohammed", "123", "054761222", "18@kau.edu.sa", "876", "2222" ,"Jeddah, Nakheel street");
         Person c2 = new Customer("Ahmed", "321", "0542222", "19@kau.edu.sa", "432", "333" ,"Makkah, Buhyrat street");
@@ -19,6 +20,9 @@ public class Main {
         Person e2 = new Employee("Suhaib", "121", "02225321", "mxr@mail.com", "12345678", "Network" );
         personArrayList.add(e1);
         personArrayList.add(e2);
+
+        String [] ProvidedServices = {"Network","Cloud","Security","Database","Server"};
+        String [] subServices = {"Configuration","Design","Implementation","Troubleshooting","Consulting"};
 
         Scanner input = new Scanner(System.in);
         System.out.println("Hello on IT Consultancies Services Software");
@@ -58,130 +62,71 @@ public class Main {
                 System.out.println("2- Request Order");
                 System.out.println("3- Delete Order");
                 System.out.print("Choose: ");
-                int userInput = input.nextInt();
 
-                if (userInput==1){
+                int BigUserInput = input.nextInt();
+                int userInput ;
+
+                if (BigUserInput==1){
                     personObjectTempHolder.viewOrder();
                     if(personObjectTempHolder.getArrayList().size()==0){
                         System.out.println("No Orders");
                     }
                 }
-                if (userInput==2){
+                if (BigUserInput==2){
                     System.out.println("Main Services:");
-                    System.out.println("1- Network");
-                    System.out.println("2- Cloud");
-                    System.out.println("3- Security");
-                    System.out.println("4- Database");
-                    System.out.println("5- Server");
+
+                    for (int i = 0; i < ProvidedServices.length; i++) {
+                        System.out.println(i+1+"- "+ProvidedServices[i]);
+                    }
                     System.out.print("Enter Wanted Server: ");
+
                     userInput = input.nextInt();
-                    String serviceName = "";
-                    if(userInput==1){
-                        serviceName = "Network";
-                    }
-                    if(userInput==2){
-                        serviceName = "Cloud";
-                    }
-                    if(userInput==3){
-                        serviceName = "Security";
-                    }
-                    if(userInput==4){
-                        serviceName = "Database";
-                    }
-                    if(userInput==5){
-                        serviceName = "Server";
-                    }
+                    ServiceFactory serviceFactory = new ServiceFactory();
+                    Service currService = serviceFactory.getService(userInput);
+                    String serviceName = currService.getServiceName();
 
                     System.out.println("Available Employees for " + serviceName + " Solution");
+
+                    ArrayList <Person> emp = new ArrayList<>();
+
                     for (int i = 0; i <personArrayList.size(); i++) {
                         if(personArrayList.get(i) instanceof Employee){
-                            if( ((Employee) personArrayList.get(i)).getMajor().equals(serviceName)){
-                                System.out.println(personArrayList.get(i).toString());
+                            if( personArrayList.get(i).getMajor().equals(serviceName) ){
+                                emp.add(personArrayList.get(i));
                             }
                         }
                     }
-                    System.out.print("Enter Wanted Employees: ");
+                    for (int i = 0; i < emp.size(); i++) {
+                        System.out.println(i+1+"- "+emp.get(i));
+                    }
+                    System.out.print("Enter Wanted Employees : ");
                     userInput = input.nextInt();
-                   // String serviceName = "";
-
-
+                    Person chosenEmp =  emp.get(userInput-1);
 
                     System.out.println("Main Sub Services:");
-                    System.out.println("1- Configuration");
-                    System.out.println("2- Design");
-                    System.out.println("3- Implementation");
-                    System.out.println("4- Troubleshooting");
-                    System.out.println("5- Consulting");
-                    System.out.print("Enter Wanted Server: ");
+                    for (int i = 0; i < subServices.length; i++) {
+                        System.out.println(i+1+"- "+subServices[i]);
+                    }
+                    System.out.print("Enter Wanted Sub Service: ");
                     userInput = input.nextInt();
-                    String subserviceName = "";
-                    if(userInput==1){
-                        subserviceName = "Configuration";
-                    }
-                    if(userInput==2){
-                        subserviceName = "Design";
-                    }
-                    if(userInput==3){
-                        subserviceName = "Implementation";
-                    }
-                    if(userInput==4){
-                        subserviceName = "Troubleshooting";
-                    }
-                    if(userInput==5){
-                        subserviceName = "Consulting";
-                    }
+                    String subserviceName = subServices[userInput-1];
+                    currService.setSubServiceName(subserviceName);
+
+                    Order order = new Order(personObjectTempHolder.getName(),chosenEmp.getName(),currService);
+                    personObjectTempHolder.putOrder(order);
+                    System.out.println(order);
+
 
                 }
-                if (userInput==3){
+                if (BigUserInput==3){
                     personObjectTempHolder.viewOrder();
                     System.out.print("Choose one order above to delete: ");
                     int temp = input.nextInt();
                     personObjectTempHolder.dropOrder(temp);
                 }
-
             }
         }
 
-
-
-
-//        String services [] = {"Web design","Network config","Security"};
-//
-//        Scanner in = new Scanner(System.in);
-//
-//        String name ="";
-//        int pass;
-//
-//        User u1 = null;
-//
-//        while (true){
-//            System.out.println("#### Welcome to IT consultanties ####\n");
-//            if(u1 == null){
-//                System.out.print("Enter your username: ");
-//                name = in.next();
-//                System.out.print("\nEnter your password: ");
-//                pass  = in.nextInt();
-//                u1  = DatabaseManager.getUser(name,pass);
-//            }else{
-//                int cmd ;
-//                System.out.println("Welcome "+name);
-//                System.out.println("Choose from bellow:\n" +
-//                        "Press '1' to show Our services\n" +
-//                        "Press '2' to show Your orders");
-//                cmd = in.nextInt();
-//                if(cmd == 1 ){
-//                    for (int i = 0; i <services.length; i++) {
-//                        System.out.println(i+1+"-"+services[i]);
-//                    }
-//                    System.out.println("Choose desired services :");
-//                    cmd = in.nextInt();
-//
-//                }else{
-//                    System.out.println("This is your orders ..");
-//                }
-//            }
-//
-//        }
 
 
 

@@ -6,6 +6,10 @@ public class Server extends Service{
 
     }
 
+    public Server(String serviceName, String subServiceName, String price) {
+        super(serviceName, subServiceName, price);
+    }
+
     @Override
     public void requestDesign() {
 

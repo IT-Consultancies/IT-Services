@@ -5,6 +5,29 @@ public abstract class  Service {
     private String subServiceName;
     private String price;
 
+    public Service(String serviceName, String subServiceName, String price) {
+        this.serviceName = serviceName;
+        this.subServiceName = subServiceName;
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Service{" +
+                "serviceName='" + serviceName + '\'' +
+                ", subServiceName='" + subServiceName + '\'' +
+                ", price='" + price + '\'' +
+                '}';
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public void setSubServiceName(String subServiceName) {
+        this.subServiceName = subServiceName;
+    }
+
     public abstract void requestConfiguration();
     public abstract void requestDesign();
 

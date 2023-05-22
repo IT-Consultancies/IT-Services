@@ -5,8 +5,17 @@ import java.util.ArrayList;
 
 public abstract class  Person {
     private String name;
-
+    private String major;
     private String password;
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
     private String phoneNumber;
     private String emailAddress;
     private String id;
