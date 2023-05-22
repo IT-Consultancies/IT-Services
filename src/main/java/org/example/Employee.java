@@ -4,15 +4,19 @@ package org.example;
 public class Employee extends Person {
 
     private String major;
-    private String salary;
 
-    public Employee(String name, String phoneNumber, String emailAddress, String id) {
-        super(name, phoneNumber, emailAddress, id);
+    public Employee(String name, String password, String phoneNumber, String emailAddress, String id, String major) {
+        super(name, password, phoneNumber, emailAddress, id);
+        this.major = major;
     }
 
     @Override
-    public void requestOrder() {
+    public void putOrder(Order order) {
 
+    }
+
+    public String getMajor() {
+        return major;
     }
 
     @Override
@@ -20,13 +24,16 @@ public class Employee extends Person {
 
     }
 
+
     @Override
-    public void modifyOrder() {
+    public void dropOrder(int i) {
 
     }
 
     @Override
-    public void removeOrder() {
-
+    public String toString() {
+        return super.toString()+"   Employee{" +
+                "major='" + major + '\'' +
+                '}';
     }
 }

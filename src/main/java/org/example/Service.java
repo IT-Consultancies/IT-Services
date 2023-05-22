@@ -11,5 +11,18 @@ public abstract class  Service {
     public abstract void requestImplementation();
     public abstract void requestTroubleshooting();
 
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public String getSubServiceName() {
+        return subServiceName;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
     public abstract void requestConsulting();
 }

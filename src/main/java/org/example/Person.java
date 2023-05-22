@@ -5,24 +5,46 @@ import java.util.ArrayList;
 
 public abstract class  Person {
     private String name;
+
+    private String password;
     private String phoneNumber;
     private String emailAddress;
     private String id;
     private ArrayList <Order> arrayList;
 
-    public Person(String name, String phoneNumber, String emailAddress, String id) {
+    public Person(String name, String password, String phoneNumber, String emailAddress, String id) {
         this.name  = name;
+        this.password = password;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.id = id;
         this.arrayList = new ArrayList<>();
     }
 
-    public abstract void requestOrder();
+    public abstract void putOrder(Order order);
 
     public abstract void viewOrder();
-    public abstract void modifyOrder();
-    public abstract void removeOrder();
+
+    public String getName() {
+        return name;
+    }
 
 
+    public String getPassword() {
+        return password;
+    }
+
+    public ArrayList<Order> getArrayList() {
+        return arrayList;
+    }
+
+    public abstract void dropOrder(int i);
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }
