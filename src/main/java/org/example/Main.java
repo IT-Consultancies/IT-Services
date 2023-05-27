@@ -8,47 +8,31 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        //Database stuff (fill data)
-        Person c1 = new Customer("Mohammed", "123", "054761222", "18@kau.edu.sa", 0);
-        Person c2 = new Customer("Ahmed", "321", "0542222", "19@kau.edu.sa", 0);
-        ArrayList <Person> personArrayList = new ArrayList<Person>();
-        personArrayList.add(c1);
-        personArrayList.add(c2);
 
-        //Database stuff (fill data)
-        Person e1 = new Employee("Malik", "333", "0555321",  "Network" );
-        Person e2 = new Employee("Suhaib", "121", "02225321",  "Network" );
-        personArrayList.add(e1);
-        personArrayList.add(e2);
-
-        String [] ProvidedServices = {"Network","Cloud","Security","Database","Server"};
         String [] subServices = {"Configuration","Design","Implementation","Troubleshooting","Consulting"};
-
         Scanner input = new Scanner(System.in);
         System.out.println("Hello on IT Consultancies Services Software");
 
+
         Person personObjectTempHolder = null;
-        boolean loginStatus =false;
-        boolean exit = false;
-        while (!exit){
 
-        System.out.print("Username:  ");
-        String name = input.next();
-        //System.out.print("Password:  ");
-       // String password = input.next();
+       while (true){
+            System.out.print("Username: ");
+            String name = input.next();
+            System.out.print("Password: ");
+            int password = input.nextInt();
 
-        for (int i = 0; i < personArrayList.size(); i++) {
-            if (personArrayList.get(i).getName().equals(name) ){
-                personObjectTempHolder = personArrayList.get(i);
+            if (DatabaseManager.getCustomer(name,password) != null){
+               personObjectTempHolder = DatabaseManager.getCustomer(name,password);
+               System.out.println("Correct Credentials");
+               break;
+            }else if(DatabaseManager.getCustomer(name,password) != null){
+                personObjectTempHolder = DatabaseManager.getCustomer(name,password);
                 System.out.println("Correct Credentials");
-                loginStatus = true;
-                exit = true;
                 break;
-            }
-          }
-        if (loginStatus==false){
-            System.out.println("Wrong Credentials!");
-            System.out.println("Please enter correct credentials");
+            }else{
+                System.out.println("Wrong Credentials!");
+                System.out.println("Please enter correct credentials");
             }
         }
 
@@ -73,54 +57,62 @@ public class Main {
                     }
                 }
                 if (BigUserInput==2){
-                    System.out.println("Main Services:");
-
-                    for (int i = 0; i < ProvidedServices.length; i++) {
-                        System.out.println(i+1+"- "+ProvidedServices[i]);
-                    }
-                    System.out.print("Enter Wanted Service: ");
+                    System.out.println("\nMain Services:");
+                    DatabaseManager.getAllServices();
+                    System.out.print("\nEnter Wanted Service: ");
 
                     userInput = input.nextInt();
                     ServiceFactory serviceFactory = new ServiceFactory();
                     Service currService = serviceFactory.getService(userInput);
                     String serviceName = currService.getServiceName();
 
-                    System.out.println("Available Employees for " + serviceName + " Solution");
+                    System.out.println("\nAvailable Employees for " + serviceName + " Solution");
 
-                    ArrayList <Person> emp = new ArrayList<>();
+                    ArrayList <Employee> emp = DatabaseManager.getEmployeeForAServoice(serviceName);
 
-                    for (int i = 0; i <personArrayList.size(); i++) {
-                        if(personArrayList.get(i) instanceof Employee){
-                            if( personArrayList.get(i).getMajor().equals(serviceName) ){
-                                emp.add(personArrayList.get(i));
+                    for (int i = 0; i < emp.size(); i++) {
+                        System.out.println(emp.get(i));
+                    }
+
+                    Person chosenEmp =null;
+
+                    while(chosenEmp == null){
+                        System.out.print("\nEnter Wanted Employee by thier ID: ");
+                        userInput = input.nextInt();
+                        for (int i = 0; i < emp.size(); i++) {
+                            if(emp.get(i).getId() == userInput){
+                                chosenEmp = emp.get(i);
+                                break;
+                            }else{
+                                System.out.println("\nplease enter the correct ID");
                             }
                         }
                     }
-                    for (int i = 0; i < emp.size(); i++) {
-                        System.out.println(i+1+"- "+emp.get(i));
-                    }
-                    System.out.print("Enter Wanted Employee : ");
-                    userInput = input.nextInt();
-                    Person chosenEmp =  emp.get(userInput-1);
 
-                    System.out.println("Main Sub Services:");
+                    System.out.println("\nSub Services:");
                     for (int i = 0; i < subServices.length; i++) {
                         System.out.println(i+1+"- "+subServices[i]);
                     }
-                    System.out.print("Enter Wanted Sub Service: ");
+                    System.out.print("\nEnter Wanted Sub Service: ");
                     userInput = input.nextInt();
+
                     String subserviceName = subServices[userInput-1];
                     currService.setSubServiceName(subserviceName);
                     currService.getService();
-                    Order order = new Order(personObjectTempHolder.getName(),chosenEmp.getName(),currService);
-                    personObjectTempHolder.putOrder(order);
-                    System.out.println(order);
+                    DatabaseManager.setOrderToCustomer(
+                            personObjectTempHolder.getId(),currService.getId(),chosenEmp.getId()
+                            ,currService.getPrice(),currService.getSubServiceName()
+                    );
                 }
                 if (BigUserInput==3){
-                    personObjectTempHolder.viewOrder();
-                    System.out.print("Choose one order above to delete: ");
-                    int temp = input.nextInt();
-                    personObjectTempHolder.dropOrder(temp);
+                    if(personObjectTempHolder.getArrayList().size()==0){
+                        System.out.println("No Orders");
+                    }else{
+                        personObjectTempHolder.viewOrder();
+                        System.out.print("Choose one order above to delete by orderID: ");
+                        int temp = input.nextInt();
+                        personObjectTempHolder.dropOrder(temp);
+                    }
                 }
             }
         }

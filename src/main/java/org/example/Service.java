@@ -4,11 +4,17 @@ public abstract class  Service {
     private String serviceName;
     private String subServiceName;
     private int price;
+    private int id;
 
-    public Service(String serviceName, String subServiceName, int price) {
+    public Service(int id ,String serviceName, String subServiceName, int price) {
         this.serviceName = serviceName;
         this.subServiceName = subServiceName;
         this.price = price;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

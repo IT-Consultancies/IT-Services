@@ -7,10 +7,10 @@ public abstract class  Person {
     private String name;
     private String major;
     private String phoneNumber;
-    private String id;
+    private int id;
     private ArrayList <Order> arrayList;
 
-    public Person(String id ,String name, String phoneNumber ) {
+    public Person(int id ,String name, String phoneNumber ) {
         this.name  = name;
         this.phoneNumber = phoneNumber;
         this.id = id;
@@ -23,6 +23,23 @@ public abstract class  Person {
 
     public String getName() {
         return name;
+    }
+
+    public void setArrayList(ArrayList<Order> arrayList) {
+        this.arrayList = arrayList;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", id=" + id +
+                '}';
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getMajor() {
@@ -39,11 +56,5 @@ public abstract class  Person {
 
     public abstract void dropOrder(int i);
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                '}';
-    }
+
 }

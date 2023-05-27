@@ -3,8 +3,8 @@ package org.example;
 public class Network extends Service{
 
 
-    public Network(String serviceName, String subServiceName, int price) {
-        super(serviceName, subServiceName, price);
+    public Network(int id,String serviceName, String subServiceName, int price) {
+        super(id,serviceName, subServiceName, price);
     }
 
     @Override
@@ -33,7 +33,6 @@ public class Network extends Service{
 
     @Override
     public void getService() {
-        System.out.println(super.getServiceName()+super.getPrice());
         if(super.getSubServiceName().equalsIgnoreCase("Configuration")){
             requestConfiguration();
         } else if (super.getSubServiceName().equalsIgnoreCase("Design")) {

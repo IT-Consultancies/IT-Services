@@ -4,7 +4,7 @@ package org.example;
 public class Employee extends Person {
 
 
-    public Employee(String name, String phoneNumber, String id, String major) {
+    public Employee(String name, String phoneNumber, int id, String major) {
         super(id,name,phoneNumber);
         super.setMajor(major);
     }

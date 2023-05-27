@@ -9,10 +9,26 @@ public class Customer extends Person {
     private String emailAddress;
 
 
-    public Customer(String name, String phoneNumber ,String emailAddress,String id , int subscribed) {
+    public Customer(String name, String phoneNumber ,String emailAddress,int id , int subscribed) {
         super(id,name, phoneNumber);
         this.emailAddress = emailAddress;
         this.subscribed = subscribed;
+    }
+
+    public int getSubscribed() {
+        return subscribed;
+    }
+
+    public void setSubscribed(int subscribed) {
+        this.subscribed = subscribed;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     @Override
@@ -21,15 +37,34 @@ public class Customer extends Person {
     }
 
     @Override
+    public String toString() {
+        return super.toString()+"Customer{" +
+                "subscribed=" + subscribed +
+                ", emailAddress='" + emailAddress + '\'' +
+                '}';
+    }
+
+    @Override
     public void viewOrder() {
+        super.setArrayList(DatabaseManager.getCustomerOrders(super.getId()));
         for (int i = 0; i < super.getArrayList().size() ; i++) {
             System.out.println(super.getArrayList().get(i).toString());
         }
     }
 
     @Override
-    public void dropOrder(int i) {
-        super.getArrayList().remove(i);
+    public void dropOrder(int orderID) {
+        boolean isThereOrderWithThatID = false;
+        for (int i = 0; i < super.getArrayList().size() ; i++) {
+            if(super.getArrayList().get(i).getId() == orderID){
+                isThereOrderWithThatID = true;
+                super.getArrayList().remove(i);
+                break;
+            }
+        }
+        if(isThereOrderWithThatID){
+           DatabaseManager.removeOrder(orderID);
+        }
     }
 
     @Override

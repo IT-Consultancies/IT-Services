@@ -2,8 +2,8 @@ package org.example;
 
 
 public class Database extends Service{
-    public Database(String serviceName, String subServiceName, int price) {
-        super(serviceName, subServiceName, price);
+    public Database(int id,String serviceName, String subServiceName, int price) {
+        super(id,serviceName, subServiceName, price);
     }
 
     @Override

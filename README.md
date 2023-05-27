@@ -2,60 +2,105 @@
 ## Creation of Databse
 ### Tables:
 ```
-CREATE TABLE Customers (
-  cus_id INT PRIMARY KEY,
-  cus_name VARCHAR(255),
-  cus_pass VARCHAR(255),
-  cus_phone VARCHAR(20),
-  cus_email VARCHAR(50),
-  isSubscribed INT
+CREATE TABLE USERS (
+  userID INT PRIMARY KEY,
+  name VARCHAR(255),
+  password VARCHAR(255),
+  phone VARCHAR(20)
 );
-
 
 CREATE TABLE Employee (
   employeeID INT PRIMARY KEY,
   name VARCHAR(255),
-  password VARCHAR(255),
-  ephone VARCHAR(255)
+  password VARCHAR(255)
 );
-
-
-
 
 CREATE TABLE Service (
   serviceID INT PRIMARY KEY,
-  serviceName VARCHAR(255)
+  serviceName VARCHAR(255),
+  price DECIMAL(10, 2),
+  subservice VARCHAR(255)
 );
 
-
-CREATE TABLE Orders (
-  orderID INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE Order (
+  orderID INT PRIMARY KEY,
   userID INT,
+  adminID INT,
   serviceID INT,
   employeeID INT,
-  price INT,
-  subService VARCHAR(20),
-  FOREIGN KEY (userID) REFERENCES customers(cus_ID),
+  FOREIGN KEY (userID) REFERENCES Users(userID),
+  FOREIGN KEY (adminID) REFERENCES Admin(adminID),
   FOREIGN KEY (serviceID) REFERENCES Service(serviceID),
   FOREIGN KEY (employeeID) REFERENCES Employee(employeeID)
 );
-
-ALTER TABLE employee
-ADD COLUMN major_id INT,
-ADD CONSTRAINT fk_major_id
-  FOREIGN KEY (major_id)
-  REFERENCES services (serviceID);
 
 ```
 ### Insertions:
 
 ```
 
-INSERT INTO Customers (cus_id, cus_name, cus_pass, cus_phone, cus_email, isSubscribed)
-VALUES
-  (1, 'John Doe', 'password123', '1234567890', 'john@example.com', 0),
-  (2, 'Jane Smith', 'password456', '9876543210', 'jane@example.com', 0),
-  (3, 'David Johnson', 'password789', '5555555555', 'david@example.com', 0)
+INSERT INTO USERS (userID, name, password, phone)
+VALUES (101, 'Ahmed', '1212', '0501212');
+
+INSERT INTO USERS (userID, name, password, phone)
+VALUES (102, 'Mohammed', '1812', '0501122');
+
+INSERT INTO Employee (employeeID, name, password)
+VALUES (01, 'Bader', '0101');
+
+INSERT INTO Employee (employeeID, name, password)
+VALUES (02, 'Malek', '0202');
+
+INSERT INTO Employee (employeeID, name, password)
+VALUES (03, 'Mohammed', '0303');
+
+INSERT INTO Employee (employeeID, name, password)
+VALUES (04, 'Firas', '0404');
+
+INSERT INTO Service (serviceID, serviceName, price, subservice)
+VALUES (71, 'Network', 600, 'Network Implementation');
+
+INSERT INTO Service (serviceID, serviceName, price, subservice)
+VALUES (72, 'Network', 600, 'Network Configuration');
+
+INSERT INTO Service (serviceID, serviceName, price, subservice)
+VALUES (73, 'Network', 600, 'Network Design');
+
+INSERT INTO Service (serviceID, serviceName, price, subservice)
+VALUES (51, 'Cloud', 1200, 'Cloud Implementation');
+
+INSERT INTO Service (serviceID, serviceName, price, subservice)
+VALUES (52, 'Cloud', 1200, 'Cloud Configuration');
+
+INSERT INTO Service (serviceID, serviceName, price, subservice)
+VALUES (53, 'Cloud', 1200, 'Cloud Design');
+
+INSERT INTO Service (serviceID, serviceName, price, subservice)
+VALUES (91, 'Security', 1600, 'Security Implementation');
+
+INSERT INTO Service (serviceID, serviceName, price, subservice)
+VALUES (92, 'Security', 1600, 'Security Configuration');
+
+INSERT INTO Service (serviceID, serviceName, price, subservice)
+VALUES (93, 'Security', 1600, 'Security Design');
+
+INSERT INTO Service (serviceID, serviceName, price, subservice)
+VALUES (41, 'Database', 1800, 'Database Implementation');
+
+INSERT INTO Service (serviceID, serviceName, price, subservice)
+VALUES (42, 'Database', 1800, 'Database Configuration');
+
+INSERT INTO Service (serviceID, serviceName, price, subservice)
+VALUES (43, 'Database', 1800, 'Database Design');
+
+INSERT INTO Service (serviceID, serviceName, price, subservice)
+VALUES (31, 'Server', 500, 'Server Implementation');
+
+INSERT INTO Service (serviceID, serviceName, price, subservice)
+VALUES (32, 'Server', 500, 'Server Configuration');
+
+INSERT INTO Service (serviceID, serviceName, price, subservice)
+VALUES (33, 'Server', 500, 'Server Design');
 
 ```
 
