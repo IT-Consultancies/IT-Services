@@ -5,15 +5,14 @@ import java.util.ArrayList;
 
 public class Customer extends Person {
 
-    private String creditCard;
-    private String location;
-    private ArrayList <Order> arrayList;
+    private int subscribed;
+    private String emailAddress;
 
 
-    public Customer(String name, String paswword, String phoneNumber ,String emailAddress,String id, String creditCard, String location) {
-        super(name,paswword, phoneNumber,emailAddress,id);
-        this.creditCard = creditCard;
-        this.location = location;
+    public Customer(String name, String phoneNumber ,String emailAddress,String id , int subscribed) {
+        super(id,name, phoneNumber);
+        this.emailAddress = emailAddress;
+        this.subscribed = subscribed;
     }
 
     @Override
@@ -23,11 +22,9 @@ public class Customer extends Person {
 
     @Override
     public void viewOrder() {
-
         for (int i = 0; i < super.getArrayList().size() ; i++) {
             System.out.println(super.getArrayList().get(i).toString());
         }
-
     }
 
     @Override
@@ -40,10 +37,6 @@ public class Customer extends Person {
         return super.getName();
     }
 
-    @Override
-    public String getPassword() {
-        return super.getPassword();
-    }
     @Override
     public ArrayList<Order> getArrayList() {
         return super.getArrayList();

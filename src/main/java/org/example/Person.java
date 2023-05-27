@@ -6,26 +6,13 @@ import java.util.ArrayList;
 public abstract class  Person {
     private String name;
     private String major;
-    private String password;
-
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
-    }
-
     private String phoneNumber;
-    private String emailAddress;
     private String id;
     private ArrayList <Order> arrayList;
 
-    public Person(String name, String password, String phoneNumber, String emailAddress, String id) {
+    public Person(String id ,String name, String phoneNumber ) {
         this.name  = name;
-        this.password = password;
         this.phoneNumber = phoneNumber;
-        this.emailAddress = emailAddress;
         this.id = id;
         this.arrayList = new ArrayList<>();
     }
@@ -38,9 +25,12 @@ public abstract class  Person {
         return name;
     }
 
+    public String getMajor() {
+        return major;
+    }
 
-    public String getPassword() {
-        return password;
+    public void setMajor(String major) {
+        this.major = major;
     }
 
     public ArrayList<Order> getArrayList() {

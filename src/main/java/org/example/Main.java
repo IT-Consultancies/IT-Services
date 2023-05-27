@@ -9,15 +9,15 @@ public class Main {
     public static void main(String[] args) {
 
         //Database stuff (fill data)
-        Person c1 = new Customer("Mohammed", "123", "054761222", "18@kau.edu.sa", "876", "2222" ,"Jeddah, Nakheel street");
-        Person c2 = new Customer("Ahmed", "321", "0542222", "19@kau.edu.sa", "432", "333" ,"Makkah, Buhyrat street");
+        Person c1 = new Customer("Mohammed", "123", "054761222", "18@kau.edu.sa", 0);
+        Person c2 = new Customer("Ahmed", "321", "0542222", "19@kau.edu.sa", 0);
         ArrayList <Person> personArrayList = new ArrayList<Person>();
         personArrayList.add(c1);
         personArrayList.add(c2);
 
         //Database stuff (fill data)
-        Person e1 = new Employee("Malik", "333", "0555321", "mm@hotmail.com", "321", "Network" );
-        Person e2 = new Employee("Suhaib", "121", "02225321", "mxr@mail.com", "12345678", "Network" );
+        Person e1 = new Employee("Malik", "333", "0555321",  "Network" );
+        Person e2 = new Employee("Suhaib", "121", "02225321",  "Network" );
         personArrayList.add(e1);
         personArrayList.add(e2);
 
@@ -34,11 +34,11 @@ public class Main {
 
         System.out.print("Username:  ");
         String name = input.next();
-        System.out.print("Password:  ");
-        String password = input.next();
+        //System.out.print("Password:  ");
+       // String password = input.next();
 
         for (int i = 0; i < personArrayList.size(); i++) {
-            if (personArrayList.get(i).getName().equals(name) && personArrayList.get(i).getPassword().equals(password)){
+            if (personArrayList.get(i).getName().equals(name) ){
                 personObjectTempHolder = personArrayList.get(i);
                 System.out.println("Correct Credentials");
                 loginStatus = true;
@@ -78,7 +78,7 @@ public class Main {
                     for (int i = 0; i < ProvidedServices.length; i++) {
                         System.out.println(i+1+"- "+ProvidedServices[i]);
                     }
-                    System.out.print("Enter Wanted Server: ");
+                    System.out.print("Enter Wanted Service: ");
 
                     userInput = input.nextInt();
                     ServiceFactory serviceFactory = new ServiceFactory();
@@ -99,7 +99,7 @@ public class Main {
                     for (int i = 0; i < emp.size(); i++) {
                         System.out.println(i+1+"- "+emp.get(i));
                     }
-                    System.out.print("Enter Wanted Employees : ");
+                    System.out.print("Enter Wanted Employee : ");
                     userInput = input.nextInt();
                     Person chosenEmp =  emp.get(userInput-1);
 
@@ -111,12 +111,10 @@ public class Main {
                     userInput = input.nextInt();
                     String subserviceName = subServices[userInput-1];
                     currService.setSubServiceName(subserviceName);
-
+                    currService.getService();
                     Order order = new Order(personObjectTempHolder.getName(),chosenEmp.getName(),currService);
                     personObjectTempHolder.putOrder(order);
                     System.out.println(order);
-
-
                 }
                 if (BigUserInput==3){
                     personObjectTempHolder.viewOrder();
