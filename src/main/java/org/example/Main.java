@@ -26,8 +26,8 @@ public class Main {
                personObjectTempHolder = DatabaseManager.getCustomer(name,password);
                System.out.println("Correct Credentials");
                break;
-            }else if(DatabaseManager.getCustomer(name,password) != null){
-                personObjectTempHolder = DatabaseManager.getCustomer(name,password);
+            }else if(DatabaseManager.getEmployee(name,password) != null){
+                personObjectTempHolder = DatabaseManager.getEmployee(name,password);
                 System.out.println("Correct Credentials");
                 break;
             }else{
@@ -45,6 +45,10 @@ public class Main {
                 System.out.println("1- Show All Orders");
                 System.out.println("2- Request Order");
                 System.out.println("3- Delete Order");
+                System.out.println("4- Subscribe to our newsletter");
+                System.out.println("5- Unubscribe to our newsletter");
+                System.out.println("6- Exit");
+
                 System.out.print("Choose: ");
 
                 int BigUserInput = input.nextInt();
@@ -113,6 +117,44 @@ public class Main {
                         int temp = input.nextInt();
                         personObjectTempHolder.dropOrder(temp);
                     }
+                }
+
+                if (BigUserInput==4){
+                    ITconsultant itcompany = new ITconsultant();
+                    itcompany.getNotifcationService().subscribe(new EmailMsgListener(((Customer) personObjectTempHolder).getEmailAddress()));
+                    System.out.println("You are now Subscribed !");
+                }
+
+                if (BigUserInput==5){
+                    ITconsultant itcompany = new ITconsultant();
+                    itcompany.getNotifcationService().unsubscribe(new EmailMsgListener(((Customer) personObjectTempHolder).getEmailAddress()));
+                    System.out.println("You are now Unsubscribed !");
+                }
+
+                if (BigUserInput==6){
+                    exitTheMenu = true;
+                }
+            }
+        }else{
+            boolean exitTheMenu = false;
+            while (!exitTheMenu) {
+                System.out.println();
+                System.out.println("Employee Main Menu");
+                System.out.println("1- Show All Orders");
+                System.out.println("2- Exit");
+
+                System.out.print("Choose: ");
+
+                int BigUserInput = input.nextInt();
+                int userInput;
+
+                if (BigUserInput == 1) {
+                    personObjectTempHolder.viewOrder();
+                    if (personObjectTempHolder.getArrayList().size() == 0) {
+                        System.out.println("No Orders");
+                    }
+                }else{
+                    exitTheMenu =true;
                 }
             }
         }

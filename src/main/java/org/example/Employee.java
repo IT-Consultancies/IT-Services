@@ -16,7 +16,10 @@ public class Employee extends Person {
 
     @Override
     public void viewOrder() {
-
+        super.setArrayList(DatabaseManager.getCustomerOrders(-1,super.getId()));
+        for (int i = 0; i < super.getArrayList().size() ; i++) {
+            System.out.println(super.getArrayList().get(i).toString());
+        }
     }
 
 

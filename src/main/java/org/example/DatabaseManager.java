@@ -36,7 +36,6 @@ public class DatabaseManager {
             }
 
             if(uid == -1){
-                System.out.println("User not found !");
                 return null;
             }
             statement.close();
@@ -132,30 +131,42 @@ public class DatabaseManager {
 
     }
 
-    public static ArrayList <Order> getCustomerOrders(int userID){
+    public static ArrayList <Order> getCustomerOrders(int userID,int empid){
         Connection conn;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DatabaseConnection.getCon();
 
-            String query = "SELECT * FROM Orders where userID = ?";
-            PreparedStatement statement = conn.prepareStatement(query);
+            String query ;
+            PreparedStatement statement;
+            ResultSet resultSet;
+            if(userID == -1){
+                 query = "SELECT * FROM Orders where employeeID = ?";
+                 statement = conn.prepareStatement(query);
+                 statement.setInt(1, empid);
 
-            statement.setInt(1, userID);
-            ResultSet resultSet = statement.executeQuery();
+            }else{
+                query = "SELECT * FROM Orders where userID = ?";
+                statement = conn.prepareStatement(query);
+                statement.setInt(1, userID);
+            }
+
+            resultSet = statement.executeQuery();
+
 
             ArrayList <Order> ord = new ArrayList<>();
             while (resultSet.next()) {
                 int serviceID = resultSet.getInt("serviceID");
                 int empeID = resultSet.getInt("employeeID");
                 int orderID = resultSet.getInt("orderID");
+                int uid = resultSet.getInt("userID");
                 String subSerivce = resultSet.getString("subService");
 
                 ServiceFactory sf = new ServiceFactory();
                 Service currServ =  sf.getService(serviceID+1);
                 currServ.setSubServiceName(subSerivce);
                 currServ.getService();
-                ord.add(new Order(orderID,getSpecificCustomer(userID),getSpecificEmp(empeID),currServ));
+                ord.add(new Order(orderID,getSpecificCustomer(uid),getSpecificEmp(empeID),currServ));
             }
             statement.close();
             resultSet.close();
@@ -248,5 +259,135 @@ public class DatabaseManager {
             throw new RuntimeException(e);
         }
     }
+
+    public static Employee getEmployee(String name , int pass){
+        Connection conn;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DatabaseConnection.getCon();
+
+            String query = "SELECT * FROM employee WHERE name = ? AND password = ?";
+            PreparedStatement statement = conn.prepareStatement(query);
+
+            statement.setString(1, name);
+            statement.setInt(2, pass);
+
+
+            ResultSet resultSet = statement.executeQuery();
+
+            int uid = -1;
+            String ename = null;
+            String ephone = null;
+            int emajorid = -1;
+
+            while (resultSet.next()) {
+                ename = resultSet.getString("name");
+                ephone = resultSet.getString("ephone");
+                emajorid = resultSet.getInt("major_id");
+                uid = resultSet.getInt("employeeID");
+            }
+
+            if(uid == -1){
+                return null;
+            }
+            statement.close();
+            resultSet.close();
+            return new Employee(ename,ephone,uid,getSpecficServices(emajorid));
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getSpecficServices(int serviceID){
+        Connection conn;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DatabaseConnection.getCon();
+            String query = "SELECT * FROM service where serviceID = ?";
+
+            PreparedStatement statement = conn.prepareStatement(query);
+
+            statement.setInt(1, serviceID);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                return resultSet.getString("serviceName");
+            }
+            statement.close();
+            resultSet.close();
+            return null;
+
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static ArrayList <EmailMsgListener> getSubsrcibers(){
+        Connection conn;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DatabaseConnection.getCon();
+            String query = "SELECT * FROM customers where isSubscribed = ?";
+
+            PreparedStatement statement = conn.prepareStatement(query);
+
+            statement.setInt(1, 1);
+            ResultSet resultSet = statement.executeQuery();
+
+            ArrayList <EmailMsgListener> emails = new ArrayList<>();
+            while (resultSet.next()) {
+                 emails.add(new EmailMsgListener(resultSet.getString("cus_email")));
+            }
+            statement.close();
+            resultSet.close();
+
+            return emails;
+
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void updateSubsriber(int sub, String email){
+        Connection conn;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DatabaseConnection.getCon();
+
+            String query ;
+            PreparedStatement statement;
+            query = "UPDATE customers set isSubscribed = ? where cus_email = ?";
+            if(sub == -1){
+                statement = conn.prepareStatement(query);
+                statement.setInt(1, 0);
+                statement.setString(2, email);
+
+            }else{
+                statement = conn.prepareStatement(query);
+                statement.setInt(1, 1);
+                statement.setString(2, email);
+            }
+            statement.executeUpdate();
+
+            statement.close();
+
+
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

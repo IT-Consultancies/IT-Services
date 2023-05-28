@@ -46,7 +46,7 @@ public class Customer extends Person {
 
     @Override
     public void viewOrder() {
-        super.setArrayList(DatabaseManager.getCustomerOrders(super.getId()));
+        super.setArrayList(DatabaseManager.getCustomerOrders(super.getId(),-1));
         for (int i = 0; i < super.getArrayList().size() ; i++) {
             System.out.println(super.getArrayList().get(i).toString());
         }
