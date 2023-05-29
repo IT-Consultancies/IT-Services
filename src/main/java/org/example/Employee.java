@@ -11,7 +11,7 @@ public class Employee extends Person {
 
     @Override
     public void putOrder(Order order) {
-
+        return;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class Employee extends Person {
 
     @Override
     public void dropOrder(int i) {
-
+        return ;
     }
 
     @Override

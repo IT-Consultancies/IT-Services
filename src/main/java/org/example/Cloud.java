@@ -11,7 +11,6 @@ public class Cloud extends Service{
     @Override
     public void requestDesign() {
         super.setPrice(super.getPrice() + 1600);
-
     }
     @Override
     public void requestImplementation() {
