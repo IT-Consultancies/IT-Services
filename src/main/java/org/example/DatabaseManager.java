@@ -104,8 +104,9 @@ public class DatabaseManager {
         }
     }
 
-    public static void setOrderToCustomer(int userID, int serviceID, int empID, int price, String subService){
+    public static void setOrderToCustomer(int userID, String serviceName, int empID, int price, String subService){
         Connection conn;
+        int srID = getSpecficServicesByName(serviceName);
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DatabaseConnection.getCon();
@@ -114,7 +115,7 @@ public class DatabaseManager {
             PreparedStatement statement = conn.prepareStatement(query);
 
             statement.setInt(1, userID);
-            statement.setInt(2, serviceID);
+            statement.setInt(2, srID);
             statement.setInt(3, empID);
             statement.setString(4, subService);
             statement.setInt(5, price);
@@ -162,8 +163,9 @@ public class DatabaseManager {
                 int uid = resultSet.getInt("userID");
                 String subSerivce = resultSet.getString("subService");
 
+                String serv = getSpecficServices(serviceID);
                 ServiceFactory sf = new ServiceFactory();
-                Service currServ =  sf.getService(serviceID+1);
+                Service currServ =  sf.getService(serv);
                 currServ.setSubServiceName(subSerivce);
                 currServ.getService();
                 ord.add(new Order(orderID,getSpecificCustomer(uid),getSpecificEmp(empeID),currServ));
@@ -319,6 +321,33 @@ public class DatabaseManager {
             statement.close();
             resultSet.close();
             return null;
+
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static int getSpecficServicesByName(String serviceName){
+        Connection conn;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DatabaseConnection.getCon();
+            String query = "SELECT * FROM service where serviceName = ?";
+
+            PreparedStatement statement = conn.prepareStatement(query);
+
+            statement.setString(1, serviceName);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                return resultSet.getInt("serviceID");
+            }
+            statement.close();
+            resultSet.close();
+            return -1;
 
 
         } catch (ClassNotFoundException e) {

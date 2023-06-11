@@ -3,8 +3,8 @@ package org.example;
 public class Network extends Service{
 
 
-    public Network(int id,String serviceName, String subServiceName, int price) {
-        super(id,serviceName, subServiceName, price);
+    public Network(String serviceName, String subServiceName, int price) {
+        super(serviceName, subServiceName, price);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package org.example;
 
 public class Security extends Service{
-    public Security(int id,String serviceName, String subServiceName, int price) {
-        super(id,serviceName, subServiceName, price);
+    public Security(String serviceName, String subServiceName, int price) {
+        super(serviceName, subServiceName, price);
     }
 
     @Override

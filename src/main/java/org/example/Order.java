@@ -11,6 +11,11 @@ public class Order {
     private String employeeID;
     private Service service; // Bridge Design Pattern ********************** (Implementation in the Service class)
 
+    /* Where Order can be an abstract class for future purposes
+    * and cash class extends Order so it can be like Order with Cash
+    * and ApplePay class extends Order so it can be like Order with ApplePay
+    * */
+
     @Override
     public String toString() {
         return "Order{" +

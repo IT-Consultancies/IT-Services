@@ -63,11 +63,12 @@ public class Main {
                 if (BigUserInput==2){
                     System.out.println("\nMain Services:");
                     DatabaseManager.getAllServices();
-                    System.out.print("\nEnter Wanted Service: ");
+                    System.out.print("\nEnter Wanted Service By its Name: ");
 
-                    userInput = input.nextInt();
+                    String userInput2 = input.next();
                     ServiceFactory serviceFactory = new ServiceFactory();
-                    Service currService = serviceFactory.getService(userInput);
+
+                    Service currService = serviceFactory.getService(userInput2);
                     String serviceName = currService.getServiceName();
 
                     System.out.println("\nAvailable Employees for " + serviceName + " Solution");
@@ -104,7 +105,7 @@ public class Main {
                     currService.setSubServiceName(subserviceName);
                     currService.getService();
                     DatabaseManager.setOrderToCustomer(
-                            personObjectTempHolder.getId(),currService.getId(),chosenEmp.getId()
+                            personObjectTempHolder.getId(),currService.getServiceName(),chosenEmp.getId()
                             ,currService.getPrice(),currService.getSubServiceName()
                     );
                 }

@@ -20,7 +20,9 @@ public class NotifcationService {
     }
 
     public void notifys(String promotion) {
-        customers.forEach(listner -> listner.update(promotion));
+        for (int i = 0; i < customers.size(); i++) {
+            customers.get(i).update(promotion);
+        }
     }
 
 }

@@ -1,8 +1,8 @@
 package org.example;
 
 public class Cloud extends Service{
-    public Cloud(int id,String serviceName, String subServiceName, int price) {
-        super(id,serviceName, subServiceName, price);
+    public Cloud(String serviceName, String subServiceName, int price) {
+        super(serviceName, subServiceName, price);
     }
     @Override
     public void requestConfiguration() {
