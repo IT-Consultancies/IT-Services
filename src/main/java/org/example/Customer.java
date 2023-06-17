@@ -13,6 +13,8 @@ public class Customer extends Person {
         super(id,name, phoneNumber);
         this.emailAddress = emailAddress;
         this.subscribed = subscribed;
+        super.setArrayList(DatabaseManager.getCustomerOrders(super.getId(),-1));
+
     }
 
     public int getSubscribed() {
@@ -46,7 +48,7 @@ public class Customer extends Person {
 
     @Override
     public void viewOrder() {
-        super.setArrayList(DatabaseManager.getCustomerOrders(super.getId(),-1));
+       // super.setArrayList(DatabaseManager.getCustomerOrders(super.getId(),-1));
         for (int i = 0; i < super.getArrayList().size() ; i++) {
             System.out.println(super.getArrayList().get(i).toString());
         }
